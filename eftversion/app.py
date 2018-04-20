@@ -19,7 +19,11 @@ app.config.update(dict(
 @app.route("/")
 def index():
     """Index route."""
-    update_versions()
+    try:
+        update_versions()
+    except Exception as e:
+        print("Error occured while updating version: {}".format(e))
+
     return render_template(
         "index.html",
         game_version=get_version("game_versions"),
@@ -30,7 +34,11 @@ def index():
 @app.route("/versions.json")
 def versions():
     """Version JSON route."""
-    update_versions()
+    try:
+        update_versions()
+    except Exception as e:
+        print("Error occured while updating version: {}".format(e))
+
     return jsonify({
         "client": get_version("game_versions"),
         "launcher": get_version("launcher_versions")
