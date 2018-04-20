@@ -140,21 +140,15 @@ def close_db(error):
 @app.cli.command('initdb')
 def initdb_command():
     """Initialize the database."""
-    try:
-        init_db()
-        print("Initialized the database.")
-    except Exception as e:
-        print("Error occured during database init: {}".format(e))
+    init_db()
+    print("Initialized the database.")
 
 
 @app.cli.command('seeddb')
 def seeddb_command():
     """Seed the database."""
-    try:
-        update_versions()
-        print("Seeded the database.")
-    except Exception as e:
-        print("Error occured during database init: {}".format(e))
+    update_versions()
+    print("Seeded the database.")
 
 
 if __name__ == "__main__":
