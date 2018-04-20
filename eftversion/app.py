@@ -124,9 +124,9 @@ def update_versions():
             (launcher["hash"], launcher["Version"], launcher["DownloadUri"], now)
         )
         cur.execute("update checked_on set checked_on = ? where id = 1", (now,))
+        db.commit()
     else:
         raise RuntimeError("API Error")
-    db.commit()
 
 
 @app.teardown_appcontext
