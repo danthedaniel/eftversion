@@ -4,6 +4,7 @@ from flask import Flask, render_template, jsonify, g
 import sqlite3
 import os
 from datetime import datetime
+from functools import wraps
 
 from .eft_api import API
 
@@ -15,15 +16,24 @@ app.config.update(dict(
 ))
 
 
+def catch_all(func):
+    """Decorator that wraps functions with a try..catch."""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except Exception as e:
+            app.logger.error(
+                "Error occured in {}: {}".format(func.__name__, e.__repr__())
+            )
+    return wrapper
+
+
 # ROUTES
 @app.route("/")
 def index():
     """Index route."""
-    try:
-        update_versions()
-    except Exception as e:
-        print("Error occured while updating version: {}".format(e))
-
+    update_versions()
     return render_template(
         "index.html",
         game_version=get_version("game_versions"),
@@ -34,11 +44,7 @@ def index():
 @app.route("/versions.json")
 def versions():
     """Version JSON route."""
-    try:
-        update_versions()
-    except Exception as e:
-        print("Error occured while updating version: {}".format(e))
-
+    update_versions()
     return jsonify({
         "client": get_version("game_versions"),
         "launcher": get_version("launcher_versions")
@@ -93,6 +99,7 @@ def versions_stale():
     return (datetime.now() - last_checked).total_seconds() > app.config['DELAY']
 
 
+@catch_all
 def update_versions():
     """Update both the game and launcher version information from the API."""
     if not versions_stale():
