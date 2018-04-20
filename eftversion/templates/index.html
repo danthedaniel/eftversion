@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+  <title>EFT Version</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <div id="container" class="center">
+    <div>
+      <h2>Game Version</h3>
+      <span id="game-version">{{ game_version }}</span>
+    </div>
+    <div>
+      <h3>Launcher Version</h3>
+      <span id="launcher-version">{{ launcher_version }}</span>
+    </div>
+    <br />
+    <small><em>Automatically Updates</em></small>
+  </div>
+  <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}">
+  </script>
+</body>
+</html>
