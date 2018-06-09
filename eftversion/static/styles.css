@@ -5,11 +5,11 @@ body {
 }
 
 .center {
-  width: 200px;
-  height: 200px;
+  width: 15em;
+  height: 10em;
   position: absolute;
   left: 50%;
   top: 50%;
-  margin-left: -100px;
-  margin-top: -150px;
+  margin-left: -5em;
+  margin-top: -7em;
 }
